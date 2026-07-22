@@ -9,12 +9,11 @@ const app = express();
 
 app.use(express.json());
 
-const pool = require("./db");
+const pool = require("./app/config/db");
 
+const problemsRoutes = require("./app/routes/problems.routes");
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/problems", problemsRoutes);
 
 app.post("/posts", async (req, res) => {
   

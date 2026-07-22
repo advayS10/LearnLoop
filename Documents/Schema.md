@@ -20,6 +20,6 @@ create table problems (
 	topic varchar(100)  not null,
 	difficulty varchar(20) not null,
 	revision_id int default 1,
-	date DATE not null
+	date DATE CURRENT_DATE
 );
 ```
