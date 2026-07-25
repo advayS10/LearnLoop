@@ -6,9 +6,10 @@
 - Problem Name
 - Problem Link
 - Topic
-- Date
+- Created_date
 - Revision id
 - Difficulty
+- Revision_date
 
 # schema
 
@@ -20,6 +21,7 @@ create table problems (
 	topic varchar(100)  not null,
 	difficulty varchar(20) not null,
 	revision_id int default 1,
-	date DATE CURRENT_DATE
+	created_date DATE CURRENT_DATE
+	revision_date DATE not null
 );
 ```
