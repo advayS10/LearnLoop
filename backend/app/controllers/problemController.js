@@ -78,3 +78,40 @@ exports.getTodaysProblems = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch today's problems" });
     }
 };
+
+exports.revisionDone = async (req, res) => {
+    const { id } = req.params;
+    const { revision_id } = req.body;
+    const today_date = new Date();
+    let new_revision_date;
+
+    if (!id) {
+        return res.status(400).json({ error: "Problem ID is required" });
+    }
+
+    if (revision_id == 1){
+        new_revision_date = new Date(today_date.setDate(today_date.getDate() + 7)).toISOString().split('T')[0];
+    }
+    else if (revision_id == 2){
+        new_revision_date = new Date(today_date.setDate(today_date.getDate() + 14)).toISOString().split('T')[0];
+    }
+    else{
+        return res.status(400).json({ error: "Invalid revision_id. It should be either 1 or 2." });
+    }
+
+    const new_revision_id = parseInt(revision_id) + 1;
+
+    try {
+        const result = await pool.query(
+            `UPDATE problems
+             SET revision_id = $1, revision_date = $2
+             WHERE id = $3
+             RETURNING *`,
+            [new_revision_id, new_revision_date, id]
+        );
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to update problem revision" });
+    }
+};

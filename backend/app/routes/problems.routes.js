@@ -6,7 +6,8 @@ const {
     getAllProblems,
     updateProblem,
     deleteProblem,
-    getTodaysProblems
+    getTodaysProblems,
+    revisionDone
 } = require('../controllers/problemController');
 
 router.get('/', (req, res) => {
@@ -22,5 +23,7 @@ router.put('/updateProblem/:id', updateProblem);
 router.delete('/deleteProblem/:id', deleteProblem);
 
 router.get('/getTodaysProblems', getTodaysProblems);
+
+router.patch('/revisionDone/:id', revisionDone);
 
 module.exports = router;
